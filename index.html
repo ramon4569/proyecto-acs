@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Línea Base · Administración de la Configuración del Software</title>
+  <meta name="description" content="Resumen interactivo del proceso ACS según Pressman (capítulo 22), elaborado por Ramón E., Tomas E. y Brailyn R.">
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="loading">
+
+  <!-- Pantalla de carga -->
+  <div class="loader" id="loader" role="status" aria-label="Cargando">
+    <div class="loader-inner">
+      <svg class="loader-logo" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M8 14H17C25 14 25 24 33 24M8 24H33M8 34H17C25 34 25 24 33 24M33 24H41" pathLength="80"/>
+        <circle cx="8" cy="14" r="2.2" fill="currentColor" stroke="none"/>
+        <circle cx="8" cy="24" r="2.2" fill="currentColor" stroke="none"/>
+        <circle cx="8" cy="34" r="2.2" fill="currentColor" stroke="none"/>
+      </svg>
+      <div class="loader-name">Línea Base</div>
+      <div class="loader-bar"><i></i></div>
+      <div class="loader-count">0</div>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="Línea Base, inicio">
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+        <path d="M8 14H17C25 14 25 24 33 24M8 24H33M8 34H17C25 34 25 24 33 24M33 24H41"/>
+        <circle cx="8" cy="14" r="2.2" fill="currentColor" stroke="none"/>
+        <circle cx="8" cy="24" r="2.2" fill="currentColor" stroke="none"/>
+        <circle cx="8" cy="34" r="2.2" fill="currentColor" stroke="none"/>
+      </svg>
+      Línea Base
+    </a>
+    <nav class="site-nav" aria-label="Integrantes">
+      <a href="#ramon">Ramón E.</a>
+      <a href="#tomas">Tomas E.</a>
+      <a href="#brailyn">Brailyn R.</a>
+    </nav>
+  </header>
+
+  <main id="inicio">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Administración de la Configuración del Software</h1>
+        <p class="hero-sub">Tres ramas de trabajo, una sola versión. El proceso ACS explicado según Pressman, capítulo 22.</p>
+      </div>
+
+      <div class="branches" aria-hidden="true">
+        <svg viewBox="0 0 1200 260">
+          <path class="b-line" pathLength="1" d="M130 40H420C640 40 640 130 900 130"/>
+          <path class="b-line" pathLength="1" d="M130 130H900"/>
+          <path class="b-line" pathLength="1" d="M130 220H420C640 220 640 130 900 130"/>
+          <path class="b-line merge" pathLength="1" d="M900 130H1060"/>
+          <circle class="b-dot" cx="130" cy="40" r="5"/>
+          <circle class="b-dot" cx="130" cy="130" r="5"/>
+          <circle class="b-dot" cx="130" cy="220" r="5"/>
+          <circle class="b-dot b-merge-dot" cx="900" cy="130" r="7"/>
+          <text class="b-label" x="0" y="45">Ramón</text>
+          <text class="b-label" x="0" y="135">Tomas</text>
+          <text class="b-label" x="0" y="225">Brailyn</text>
+          <text class="b-main" x="1075" y="138">main</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Integrante 1 -->
+    <section class="member light" id="ramon" data-reveal>
+      <span class="initial" aria-hidden="true">R</span>
+      <div class="member-body">
+        <h2><span class="mask"><span>Ramón E.</span></span></h2>
+        <p>Parte del resumen: por definir.</p>
+        <a class="btn" href="html/ramon.html">Ver resumen
+          <svg class="arrow" viewBox="0 0 20 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M0 5H19M15 1l4 4-4 4"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- Integrante 2 -->
+    <section class="member dark" id="tomas" data-reveal>
+      <span class="initial" aria-hidden="true">T</span>
+      <div class="member-body">
+        <h2><span class="mask"><span>Tomas E.</span></span></h2>
+        <p>Parte del resumen: por definir.</p>
+        <a class="btn" href="html/tomas.html">Ver resumen
+          <svg class="arrow" viewBox="0 0 20 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M0 5H19M15 1l4 4-4 4"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- Integrante 3 -->
+    <section class="member light" id="brailyn" data-reveal>
+      <span class="initial" aria-hidden="true">B</span>
+      <div class="member-body">
+        <h2><span class="mask"><span>Brailyn R.</span></span></h2>
+        <p>Parte del resumen: por definir.</p>
+        <a class="btn" href="html/brailyn.html">Ver resumen
+          <svg class="arrow" viewBox="0 0 20 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M0 5H19M15 1l4 4-4 4"/></svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Línea Base · Proyecto ACS</span>
+    <span>Referencia: <em>Pressman, R. S. Ingeniería del software: un enfoque práctico, cap. 22. McGraw-Hill.</em></span>
+  </footer>
+
+  <script src="scripts/script.js"></script>
+</body>
+</html>

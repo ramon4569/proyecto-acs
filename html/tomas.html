@@ -31,7 +31,7 @@
   <main>
     <div class="page-head">
       <h1>Tomas E.</h1>
-      <p>Resumen de la parte asignada · Administración de la Configuración del Software (Pressman, cap. 22).</p>
+      <p>El proceso ACS: tareas fundamentales, control de cambio, versiones, auditoría y reporte de estado · Ingeniería del Software (Pressman, cap. 22, pp. 508–515).</p>
     </div>
 
     <div class="page-layout">
@@ -43,22 +43,227 @@
       </nav>
 
       <article class="article">
+
+        <!-- INTRODUCCIÓN -->
         <section id="introduccion">
           <h2>Introducción</h2>
-          <div class="placeholder">Contenido pendiente.</div>
+          <p>En cualquier proyecto de software, el cambio es una realidad inevitable que acompaña a cada etapa del ciclo de vida. Como advertía el escritor Arnold Bennett: <em>«Cualquier cambio, incluso para mejorar, está acompañado de inconvenientes e incomodidades»</em>. Si un equipo no cuenta con directrices formales para gestionar la evolución constante de sus productos de trabajo, el desarrollo degenera rápidamente en confusión, inconsistencias y pérdida de calidad.</p>
+          
+          <p>La <strong>Administración de la Configuración del Software (ACS)</strong> es la disciplina de la ingeniería de software encargada de transformar ese potencial desorden en un proceso sistemático, predecible y rigurosamente controlado. Su propósito no es frenar la innovación ni imponer trabas burocráticas innecesarias, sino brindar las salvaguardas necesarias para que las modificaciones aporten valor sin poner en peligro la integridad del producto.</p>
+
+          <p>El núcleo operativo de la ACS descansa sobre dos pilares expuestos por Roger S. Pressman:</p>
+          <ul>
+            <li><strong>El Repositorio del Proyecto:</strong> Una base de datos especializada capaz de administrar objetos de configuración con granularidades arbitrarias (desde una variable o función hasta módulos enteros). El repositorio rastrea dependencias entre elementos de diseño y código, permite el <em>rastreo hacia adelante</em> (de los requerimientos a la implementación) y el <em>rastreo hacia atrás</em> (del código a su especificación de origen), y conserva ensayos de auditoría que registran con exactitud quién, cuándo y por qué efectuó cada cambio.</li>
+            <li><strong>Los cuatro objetivos esenciales del proceso ACS:</strong>
+              <ol>
+                <li>Identificar con precisión todos los ítems que componen la configuración del software.</li>
+                <li>Administrar y regular las modificaciones aplicadas a uno o más de estos ítems.</li>
+                <li>Facilitar la construcción ordenada y reproducible de diferentes versiones del sistema.</li>
+                <li>Garantizar que la calidad técnica del software se preserve intacta a medida que el sistema evoluciona a lo largo del tiempo.</li>
+              </ol>
+            </li>
+          </ul>
+
+          <p>Para responder a cómo un equipo de desarrollo identifica elementos discretos, controla versiones paralelas y comunica los cambios realizados, Pressman estructura el proceso ACS mediante un modelo de <strong>cinco capas concéntricas</strong>: identificación, control de versión, control de cambio, auditoría de configuración y reporte de estado.</p>
         </section>
+
+        <!-- DESARROLLO -->
         <section id="desarrollo">
           <h2>Desarrollo</h2>
-          <div class="placeholder">Contenido pendiente. Usa &lt;h3&gt; para subtítulos y &lt;p&gt; para párrafos.</div>
+          <p>El proceso ACS se organiza en cinco tareas interconectadas representadas como capas concéntricas (figura 22.4 del texto). Cada Ítem de Configuración del Software (ICS) fluye a través de estas capas a lo largo de su ciclo vital, activando los mecanismos de control correspondientes según sus necesidades:</p>
+
+          <h3>1. Identificación de objetos en la configuración del software</h3>
+          <p>Para poder gobernar y registrar un producto de trabajo, primero es imprescindible asignarle una identidad unívoca mediante un enfoque orientado a objetos. Se distinguen dos categorías primordiales de objetos:</p>
+          
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Tipo de Objeto</th>
+                  <th>Definición y Alcance</th>
+                  <th>Ejemplos Representativos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Objeto Básico</strong></td>
+                  <td>Unidad indivisible de información creada durante el análisis, diseño, codificación o pruebas. Posee una realización directa en forma de texto, diagrama o archivo ejecutable.</td>
+                  <td>Un algoritmo o componente de código fuente, una sección de especificación de requisitos, un diagrama de clases UML, una suite de casos de prueba.</td>
+                </tr>
+                <tr>
+                  <td><strong>Objeto Agregado</strong></td>
+                  <td>Estructura jerárquica o compuesta que reúne múltiples objetos básicos y otros objetos agregados mediante referencias o punteros nominados.</td>
+                  <td>Una especificación completa de diseño (<code>DesignSpecification</code>) que agrupa modelos de datos, arquitectura y componentes.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Cada objeto en el esquema ACS se caracteriza por cuatro propiedades fundamentales:</p>
+          <ul>
+            <li><strong>Nombre:</strong> Cadena de caracteres que lo individualiza de forma inequívoca en todo el proyecto.</li>
+            <li><strong>Descripción:</strong> Metadatos descriptivos que indican el tipo de ICS (elemento de modelo, programa, datos), identificador del proyecto e información de versión/cambio.</li>
+            <li><strong>Recursos:</strong> Entidades que el objeto provee, referencia, procesa o requiere para funcionar (tipos de datos, funciones externas, variables).</li>
+            <li><strong>Realización:</strong> Puntero a la unidad de texto o contenido concreto en el caso de objetos básicos; nulo para objetos agregados.</li>
+          </ul>
+
+          <p>Asimismo, los objetos se vinculan mediante dos tipos de relaciones: <strong>relaciones jerárquicas</strong> de pertenencia (notación <code>&lt;parte de&gt;</code>) y <strong>relaciones transestructurales</strong> entre ramas independientes (notación <code>&lt;interrelacionado&gt;</code>), indispensables para evaluar de inmediato el impacto colateral de cualquier cambio.</p>
+
+          <blockquote>
+            «Antes de que un objeto se convierta en línea de referencia, puede cambiar muchas veces; incluso, después de establecer una línea de referencia, los cambios pueden ser bastante frecuentes.»
+            <cite>— Roger S. Pressman, cap. 22.3.1</cite>
+          </blockquote>
+
+          <h3>2. Control de versión</h3>
+          <p>El control de versión combina procedimientos formales y herramientas automatizadas para gestionar las múltiples versiones de los ICS generadas durante el ciclo de vida. Un sistema maduro de control de versiones ofrece cuatro capacidades cardinales:</p>
+          <ol>
+            <li><strong>Base de datos del proyecto (repositorio):</strong> Almacén persistente de todos los objetos y sus interrelaciones.</li>
+            <li><strong>Administración de versiones:</strong> Mecanismo que preserva las versiones históricas de cada ICS o reconstruye cualquier estado previo mediante diferencias progresivas (*deltas*).</li>
+            <li><strong>Facilidad para elaboración y construcción:</strong> Entorno que recopila los ICS requeridos y compila/ensambla de manera automática una versión específica del software.</li>
+            <li><strong>Rastreador de conflictos y errores:</strong> Módulo para registrar, priorizar y dar seguimiento al estado de todas las incidencias y solicitudes pendientes vinculadas a cada objeto.</li>
+          </ol>
+          <p>A esto se suma el concepto de <strong>conjunto de cambio (*change set*)</strong>, el cual empaqueta en una sola unidad lógica todas las modificaciones en archivos, motivos, autor y fechas necesarias para transitar de una configuración base a una versión específica mediante un modelo formal de construcción con reglas y verificación.</p>
+
+          <h3>3. Control de cambio: el equilibrio entre orden y dinamismo</h3>
+          <p>El control de cambio se enfrenta a una constante tensión entre la disciplina y la flexibilidad. James Bach resume con lucidez esta realidad:</p>
+
+          <blockquote>
+            «El control del cambio es vital. Pero las fuerzas que lo hacen necesario también lo hacen desconcertante. Nos preocupamos por el cambio porque una pequeña perturbación en el código puede crear una gran falla en el producto... Nos preocupamos por el cambio porque un solo desarrollador granuja podría hundir el proyecto, aunque en las mentes de dichos granujas se originan ideas brillantes y un abrumador proceso de control del cambio podría desalentarlos de hacer trabajo creativo. Mucho control y se crearán problemas; muy poco y se crearán otros problemas.»
+            <cite>— James Bach</cite>
+          </blockquote>
+
+          <p>Para resolver este dilema, el proceso formal de control de cambio (figura 22.5) sigue un flujo escalonado y transparente:</p>
+          <ul>
+            <li><strong>Petición de cambio:</strong> El usuario o cliente formaliza la necesidad de una modificación.</li>
+            <li><strong>Evaluación técnica:</strong> El equipo de desarrollo analiza el mérito técnico, potenciales efectos colaterales, impacto en otros ICS y costo estimado.</li>
+            <li><strong>Reporte de cambio y decisión:</strong> Los resultados se remiten a la <strong>Autoridad de Control del Cambio (ACC)</strong> (o comité de cambios), quien evalúa la conveniencia global y aprueba o rechaza la solicitud.</li>
+            <li><strong>Orden de Cambio de Ingeniería (OCI):</strong> Si la ACC aprueba la petición, emite una OCI con los requisitos, restricciones y criterios de aceptación.</li>
+            <li><strong>Extracción y modificación:</strong> El desarrollador efectúa la «salida» (*check-out*) del ICS hacia un directorio controlado, aplica los cambios y realiza las pruebas unitarias.</li>
+            <li><strong>Revisión, reintegro y aseguramiento:</strong> Tras verificar técnicamente el trabajo, el objeto «entra» (*check-in*) al repositorio, se establece una línea de referencia para pruebas formales de calidad (SQA) y se promueve a la siguiente versión del producto.</li>
+          </ul>
+
+          <div class="callout">
+            <div class="callout-title">Mecanismos protectores: Acceso y Sincronización</div>
+            <p>El control de cambio previene errores comunes mediante dos salvaguardas: <strong>control de acceso</strong> (define qué ingenieros cuentan con permisos para editar un objeto determinado) y <strong>control de sincronización</strong> (garantiza que dos personas que trabajan de manera concurrente en un mismo ICS no sobreescriban accidentalmente el trabajo mutuo).</p>
+          </div>
+
+          <p>Para evitar burocracias excesivas, el rigor del control se gradúa en tres niveles evolutivos:</p>
+          <ul>
+            <li><strong>Control informal:</strong> Aplicado antes de que el ICS alcance su primera línea de referencia. El desarrollador tiene autonomía para experimentar e iterar libremente.</li>
+            <li><strong>Control a nivel de proyecto:</strong> Entra en vigencia cuando el ICS se aprueba como línea de referencia. Requiere el visto bueno del gerente de proyecto o de la ACC para alteraciones locales o compartidas.</li>
+            <li><strong>Control formal:</strong> Se instituye una vez que el software se entrega y libera a los clientes, exigiendo auditorías, OCI y aprobaciones estrictas.</li>
+          </ul>
+
+          <h3>4. Auditoría de la configuración</h3>
+          <p>Mientras que una <strong>revisión técnica</strong> se concentra en la exactitud algorítmica y la consistencia funcional del código o diseño recién editado, la <strong>auditoría de configuración</strong> complementa esa labor verificando que se haya respetado el proceso de ingeniería y la integridad del repositorio. Una auditoría formal, usualmente liderada por el equipo de aseguramiento de calidad (SQA), comprueba rigurosamente seis interrogantes:</p>
+          <ol>
+            <li>¿Se implementó con fidelidad el cambio prescrito en la OCI sin incluir alteraciones arbitrarias o no autorizadas?</li>
+            <li>¿Se llevó a cabo la revisión técnica correspondiente para asegurar la corrección técnica?</li>
+            <li>¿Se respetaron el proceso de desarrollo y los estándares de ingeniería de software definidos por la organización?</li>
+            <li>¿Se resaltó el cambio dentro del ICS, registrando explícitamente autor, fecha y actualización de atributos?</li>
+            <li>¿Se siguieron a cabalidad los procedimientos ACS para anotar, registrar y notificar el cambio?</li>
+            <li>¿Se actualizaron y sincronizaron adecuadamente todos los ICS dependientes o interrelacionados?</li>
+          </ol>
+
+          <h3>5. Reporte de estado de la configuración (REC)</h3>
+          <p>También conocido como <em>contabilidad de estado</em>, el REC actúa como el centro de comunicaciones del proceso ACS. Su cometido es erradicar los silos de información respondiendo a cuatro preguntas elementales cada vez que un cambio ocurre:</p>
+          <ul>
+            <li><strong>¿Qué ocurrió?</strong> Detalle exacto de la modificación efectuada y versión alcanzada.</li>
+            <li><strong>¿Quién lo hizo?</strong> Identificación del autor y aprobador del cambio.</li>
+            <li><strong>¿Cuándo ocurrió?</strong> Marca temporal precisa del evento.</li>
+            <li><strong>¿Qué más se afectará?</strong> Alcance sobre otros componentes, documentación y pruebas.</li>
+          </ul>
+          <p>Los reportes REC se distribuyen automáticamente mediante registros web o bases de datos compartidas a través de listas de <em>«necesidad de saber»</em>, garantizando que desarrolladores, gerentes y personal de soporte técnico compartan una visión unificada de la configuración actual.</p>
         </section>
+
+        <!-- EJEMPLOS -->
         <section id="ejemplos">
           <h2>Ejemplos</h2>
-          <div class="placeholder">Contenido pendiente.</div>
+
+          <h3>Ejemplo 1: Jerarquía y relaciones de objetos de configuración</h3>
+          <p>Pressman ilustra cómo un producto de software complejo se descompone en objetos agregados y básicos que mantienen dependencias multidireccionales:</p>
+
+          <pre><code>DesignSpecification                  [Objeto Agregado]
+  ├── ArchitecturalModel             [Objeto Agregado]
+  ├── DataModel                      [Objeto Agregado]
+  │     ├── ModeloDatos              [Objeto Agregado]
+  │     └── ModeloFlujoDatos         [Objeto Agregado]
+  ├── ComponentN                     [Objeto Básico: archivo de código]
+  └── UMLClassDiagramN               [Objeto Básico: diagrama visual]</code></pre>
+
+          <p>Las relaciones sintácticas conectan tanto la jerarquía vertical como los enlaces cruzados entre modelos y casos de prueba:</p>
+          <pre><code>Diagrama clase        &lt;parte de&gt;         Modelo requerimientos
+Modelo requerimientos &lt;parte de&gt;         Especificación requerimientos
+ModeloDatos           &lt;interrelacionado&gt; ModeloFlujoDatos
+ModeloDatos           &lt;interrelacionado&gt; CasoPruebaClaseM</code></pre>
+          <p>Gracias a estas relaciones, si el desarrollador modifica el <code>Diagrama clase</code>, el repositorio advierte automáticamente que <code>CasoPruebaClaseM</code> y las clases de código vinculadas requieren actualización inmediata.</p>
+
+          <h3>Ejemplo 2: Caso de estudio «CasaSegura» (Conflicto ACS)</h3>
+          <p>El libro presenta una viñeta entre Doug Miller (gerente), Vinod Raman y Jamie Lazar al iniciar el proyecto CasaSegura. Recordando el desastre de su proyecto anterior de iluminación doméstica —donde cambios no coordinados provocaron demoras críticas y frustración masiva—, el equipo acuerda implementar tres reglas inapelables:</p>
+          <div class="callout">
+            <div class="callout-title">Los tres compromisos clave de CasaSegura</div>
+            <ol>
+              <li><strong>Desarrollar un proceso formal de control de cambio:</strong> Estandarizar cómo se solicitan los cambios, cómo se evalúa su impacto global y cómo se deja constancia documentada de cada decisión.</li>
+              <li><strong>Adoptar herramientas ACS confiables:</strong> Implementar un repositorio centralizado que soporte la identificación rigurosa de ICS y el rastreo de versiones.</li>
+              <li><strong>Compromiso inquebrantable del equipo:</strong> Seguir estrictamente las políticas acordadas y utilizar las herramientas en todo momento, erradicando modificaciones clandestinas al margen del repositorio.</li>
+            </ol>
+          </div>
+
+          <h3>Ejemplo 3: El Sistema de Versiones Concurrentes (SVC) y herramientas modernas</h3>
+          <p>El texto examina cómo herramientas representativas resuelven las tareas del proceso ACS:</p>
+          <ul>
+            <li><strong>Sistema de Versiones Concurrentes (SVC / CVS):</strong> Herramienta clásica de código abierto y arquitectura cliente-servidor que almacena diferencias entre versiones consecutivas (*deltas*) y aísla el trabajo simultáneo en directorios individuales, mezclando (*merging*) los cambios al terminar la labor. Requiere integrarse con utilidades de construcción como <code>Makefile</code>.</li>
+            <li><strong>Soluciones empresariales y de soporte integral:</strong>
+              <ul>
+                <li><code>ClearCase</code> (Rational/IBM): Plataforma corporativa que unifica control de versión, espacios de trabajo virtuales y automatización de compilación.</li>
+                <li><code>CCC/Harvest</code> (Computer Associates): Solución multiplataforma con potente gestión de ciclo de vida de cambios.</li>
+                <li><code>Serena ChangeMan ZMF</code>: Suite de alta robustez orientada a entornos bancarios, mainframe y webapps.</li>
+                <li><code>SourceForge</code>, <code>SurroundSCM</code> y <code>Vesta</code>: Plataformas que integran control de versiones con rastreo de incidencias, flujos de revisión y construcción continua.</li>
+              </ul>
+            </li>
+          </ul>
+
+          <h3>Ejemplo 4: Flujo práctico de una Orden de Cambio de Ingeniería (OCI)</h3>
+          <p>En este mismo proyecto web, imaginemos que se solicita incorporar soporte para tema claro/oscuro dinámico:</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Fase del Flujo</th><th>Acción Concreta en el Proyecto</th><th>Resultado Generado</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1. Petición</td><td>El usuario solicita alternar entre tema oscuro y claro mediante un botón.</td><td>Petición de cambio #12 registrada en el repositorio.</td></tr>
+                <tr><td>2. Evaluación y ACC</td><td>Tomas E. evalúa el impacto en <code>styles.css</code>, variables CSS y scripts. La ACC aprueba la propuesta.</td><td>Se emite la OCI #04 detallando colores, contrastes y alcance.</td></tr>
+                <tr><td>3. Salida y Edición</td><td>Se crea una rama secundaria de trabajo (*branch*) aislada para implementar los cambios.</td><td>Edición de archivos sin afectar la rama principal (<code>main</code>).</td></tr>
+                <tr><td>4. SQA y Auditoría</td><td>Se revisa el contraste visual, se ejecutan pruebas en navegadores y se comprueba la documentación.</td><td>Aprobación de la auditoría y reporte REC emitido.</td></tr>
+                <tr><td>5. Promoción</td><td>Se fusionan (*merge*) los cambios a la rama principal y se despliega la nueva versión.</td><td>Nueva línea base operativa disponible para todos los integrantes.</td></tr>
+              </tbody>
+            </table>
+          </div>
         </section>
+
+        <!-- CONCLUSIÓN -->
         <section id="conclusion">
           <h2>Conclusión</h2>
-          <div class="placeholder">Contenido pendiente.</div>
+          <p>La Administración de la Configuración del Software no constituye una carga accesoria, sino el andamiaje imprescindible que permite al software evolucionar de manera saludable y sostenible. Como sentenció el filósofo Alfred North Whitehead:</p>
+
+          <blockquote>
+            «El arte de avanzar es preservar el orden en medio del cambio y preservar el cambio en medio del orden.»
+            <cite>— Alfred North Whitehead</cite>
+          </blockquote>
+
+          <p>A lo largo de este estudio se consolidan aprendizajes esenciales para cualquier profesional de la ingeniería de software:</p>
+          <ul>
+            <li><strong>Sin identificación no existe control:</strong> Todo elemento que aspire a ser protegido y evaluado debe ser nombrado, clasificado en objetos básicos o agregados y relacionado formalmente con los demás componentes del sistema.</li>
+            <li><strong>El equilibrio es la clave del éxito:</strong> Un control de cambio excesivamente rígido ahoga la agilidad e iniciativa del equipo, mientras que la carencia de control precipita al proyecto hacia la incompatibilidad, la sobreescritura accidental y el colapso.</li>
+            <li><strong>Revisión técnica y auditoría son complementarias:</strong> La primera asegura que el cambio funcione correctamente a nivel técnico; la segunda garantiza que el cambio respete los estándares, las directrices de la OCI y la trazabilidad de la documentación.</li>
+            <li><strong>Vigencia crítica en WebApps y desarrollo ágil:</strong> En proyectos modernos con ciclos iterativos rápidos y despliegues continuos, la presencia constante del cambio vuelve a la ACS indispensable para coordinar equipos distribuidos y asegurar que cada incremento mantenga la excelencia del producto global.</li>
+          </ul>
+
+          <p>En conclusión, adoptar las tareas de ACS —respaldadas por repositorios modernos como Git y flujos colaborativos bien estructurados— es la garantía definitiva de que el software permanecerá ordenado, auditable y de alta calidad a lo largo de toda su vida útil.</p>
+
+          <p><em>Referencia: Pressman, R. S. Ingeniería del software: un enfoque práctico, cap. 22, pp. 508–515. McGraw-Hill.</em></p>
         </section>
+
       </article>
     </div>
   </main>

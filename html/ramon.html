@@ -31,110 +31,308 @@
   <main>
     <div class="page-head">
       <h1>Ramón E.</h1>
-      <p>Repositorio, proceso ACS e identificación de objetos de configuración · Administración de la Configuración del Software (Pressman, cap. 22).</p>
+      <p class="lead">Resumen completo de la Administración de la Configuración del Software · Pressman, capítulo 22, pp. 508-515.</p>
     </div>
 
     <div class="page-layout">
       <nav class="toc" aria-label="Contenido de la página">
         <a href="#introduccion">Introducción</a>
         <a href="#desarrollo">Desarrollo</a>
+        <a class="sub-link" href="#repositorio">Repositorio</a>
+        <a class="sub-link" href="#proceso">El proceso ACS</a>
+        <a class="sub-link" href="#identificacion">Identificación</a>
+        <a class="sub-link" href="#version">Control de versión</a>
+        <a class="sub-link" href="#cambio">Control de cambio</a>
+        <a class="sub-link" href="#auditoria">Auditoría</a>
+        <a class="sub-link" href="#reporte">Reporte de estado</a>
+        <a class="sub-link" href="#herramientas">Herramientas</a>
+        <a class="sub-link" href="#webapps">ACS para webapps</a>
         <a href="#ejemplos">Ejemplos</a>
         <a href="#conclusion">Conclusión</a>
       </nav>
 
       <article class="article">
 
+        <!-- ============ INTRODUCCIÓN ============ -->
         <section id="introduccion">
           <h2>Introducción</h2>
-          <p>En un proyecto de software participan varias personas que modifican muchos archivos al mismo tiempo: código, diagramas, documentos y pruebas. Sin un método para ordenar ese trabajo, es fácil que dos personas editen lo mismo, que se pierda una versión o que nadie sepa por qué se hizo un cambio. La Administración de la Configuración del Software (ACS) es la disciplina que evita ese desorden.</p>
-          <p>Pressman explica que el proceso ACS persigue cuatro objetivos: identificar todos los ítems que forman la configuración del software, controlar los cambios que se les hacen, facilitar la construcción de distintas versiones de una aplicación y asegurar que la calidad no se pierda mientras el software evoluciona.</p>
-          <p>A cada uno de esos ítems se le llama <strong>ICS</strong> (ítem de configuración del software): cualquier producto de trabajo que se deba controlar, como un módulo de código, una sección de los requerimientos o un conjunto de casos de prueba.</p>
+          <p class="lead">En un proyecto de software varias personas modifican muchos archivos al mismo tiempo: código, diagramas, documentos y pruebas. Sin un método, dos personas editan lo mismo, se pierden versiones y nadie sabe por qué se hizo un cambio. La <strong>Administración de la Configuración del Software (ACS)</strong> es la disciplina que evita ese desorden.</p>
+          <p>Según Pressman, el proceso ACS tiene cuatro objetivos:</p>
+
+          <div class="grid c4">
+            <div class="card"><h4>Identificar</h4><p>Todos los ítems que forman la configuración del software.</p></div>
+            <div class="card"><h4>Controlar</h4><p>Los cambios que se hacen a uno o más de esos ítems.</p></div>
+            <div class="card"><h4>Construir</h4><p>Facilitar la creación de distintas versiones de una aplicación.</p></div>
+            <div class="card"><h4>Preservar</h4><p>Garantizar que la calidad se mantenga mientras el software evoluciona.</p></div>
+          </div>
+
+          <div class="callout">
+            <div class="callout-title">¿Qué es un ICS?</div>
+            <p>Un <strong>ítem de configuración del software</strong> es cualquier producto de trabajo que se deba controlar: un módulo de código, una sección de los requerimientos o un conjunto de casos de prueba.</p>
+          </div>
         </section>
 
+        <!-- ============ DESARROLLO ============ -->
         <section id="desarrollo">
           <h2>Desarrollo</h2>
 
-          <h3>El repositorio del proyecto</h3>
-          <p>El repositorio es la base de datos donde viven todos los ICS. No solo guarda archivos: también recuerda cómo se relacionan entre sí y qué les ha pasado. Pressman destaca estas funciones:</p>
-          <ul>
-            <li><strong>Variedad de objetos:</strong> almacena texto, gráficos, código, datos de prueba y resultados. Un repositorio maduro puede seguir la pista a una pieza muy pequeña (una definición de datos) o a un grupo completo de módulos.</li>
-            <li><strong>Rastreo de dependencias:</strong> sabe qué elementos dependen de cuáles. Si se modifica un diagrama de clases, avisa que las clases, interfaces y componentes relacionados quizá también deban cambiar.</li>
-            <li><strong>Rastreo de requerimientos:</strong> permite ir hacia adelante (de un requerimiento a todo lo que se construyó a partir de él) y hacia atrás (de un producto de trabajo al requerimiento que lo originó).</li>
-            <li><strong>Administración de configuraciones:</strong> conserva las configuraciones que representan hitos del proyecto o entregas a producción.</li>
-            <li><strong>Ensayos de auditoría:</strong> registra cuándo, por qué y quién hizo cada cambio.</li>
-          </ul>
-
-          <h3>Las preguntas que debe responder el proceso ACS</h3>
-          <p>Un buen proceso ACS no tiene que ser burocrático, pero sí debe permitir al equipo responder preguntas como estas:</p>
-          <ul>
-            <li>¿Cómo se identifican los elementos que componen la configuración?</li>
-            <li>¿Cómo se manejan las muchas versiones de un programa y su documentación?</li>
-            <li>¿Cómo se controlan los cambios antes y después de entregar el software al cliente?</li>
-            <li>¿Quién aprueba y clasifica los cambios solicitados?</li>
-            <li>¿Cómo se comprueba que el cambio se hizo bien?</li>
-            <li>¿Cómo se informa a los demás de lo que cambió?</li>
-          </ul>
-
-          <h3>Las cinco tareas: un modelo de capas</h3>
-          <p>De esas preguntas salen cinco tareas: <strong>identificación, control de versión, control de cambio, auditoría de la configuración y reporte</strong>. Pressman las dibuja como capas concéntricas. Los ICS nacen en el centro y avanzan hacia afuera durante su vida útil, hasta formar parte de una versión del software.</p>
-          <p>No todos los ítems pasan por todas las capas. Un ICS recién creado siempre debe identificarse, pero si nadie pide cambiarlo, la capa de control de cambio simplemente no se aplica. Los compañeros desarrollan en sus apartados las capas de versión, cambio, auditoría y reporte; aquí me concentro en la primera.</p>
-
-          <h3>Identificación de objetos de configuración</h3>
-          <p>Para poder controlar un ICS, primero hay que darle un nombre propio y organizarlo con un enfoque orientado a objetos. Existen dos tipos:</p>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr><th>Tipo</th><th>Qué es</th><th>Ejemplos</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>Objeto básico</td><td>Unidad de información creada durante el análisis, el diseño, la codificación o las pruebas.</td><td>Una sección de requerimientos, el código fuente de un componente, un conjunto de casos de prueba.</td></tr>
-                <tr><td>Objeto agregado</td><td>Colección de objetos básicos y de otros objetos agregados.</td><td>Una especificación de diseño que reúne el modelo de arquitectura, el modelo de datos y varios componentes.</td></tr>
-              </tbody>
-            </table>
+          <!-- Repositorio -->
+          <div class="sub" id="repositorio">
+            <h3>El repositorio del proyecto</h3>
+            <p>El repositorio es la base de datos donde viven todos los ICS. No solo guarda archivos: recuerda cómo se relacionan y qué les ha pasado. Estas son sus funciones principales:</p>
+            <div class="grid c2">
+              <div class="card"><h4>Variedad de objetos</h4><p>Almacena texto, gráficos, mapas de bits, documentos, código objeto, datos de prueba y resultados. Un repositorio maduro puede seguir una pieza muy pequeña o un grupo completo de módulos.</p></div>
+              <div class="card"><h4>Rastreo de dependencias</h4><p>Maneja las relaciones entre los elementos almacenados. Si cambia un diagrama de clases UML, detecta qué clases, interfaces y componentes podrían necesitar cambios y avisa al desarrollador.</p></div>
+              <div class="card"><h4>Rastreo de requerimientos</h4><p>Hacia adelante: de un requerimiento a todo lo construido a partir de él. Hacia atrás: de un producto de trabajo al requerimiento que lo originó.</p></div>
+              <div class="card"><h4>Administración de configuraciones</h4><p>Conserva las configuraciones que representan hitos del proyecto o liberaciones a producción.</p></div>
+              <div class="card"><h4>Ensayos de auditoría</h4><p>Registra cuándo, por qué y quién hizo cada cambio. Puede avisar automáticamente cuando se modifica un elemento para iniciar el registro.</p></div>
+            </div>
           </div>
-          <p>Cada objeto se distingue por cuatro características:</p>
-          <ul>
-            <li><strong>Nombre:</strong> una cadena de texto que lo identifica sin ambigüedad.</li>
-            <li><strong>Descripción:</strong> el tipo de ICS que es (modelo, programa, datos), el proyecto al que pertenece y su información de cambio o versión.</li>
-            <li><strong>Recursos:</strong> las entidades que el objeto proporciona, procesa o necesita, como tipos de datos, funciones o nombres de variables.</li>
-            <li><strong>Realización:</strong> un puntero al contenido real en el caso de un objeto básico; en un objeto agregado es nula.</li>
-          </ul>
 
-          <h3>Relaciones entre objetos</h3>
-          <p>La identificación también registra cómo se conectan los objetos. Una relación de pertenencia (<code>&lt;parte de&gt;</code>) forma una jerarquía de ICS, mientras que una relación <code>&lt;interrelacionado&gt;</code> une objetos de ramas distintas de esa jerarquía. Estas relaciones sirven para analizar el impacto de un cambio, pero cuestan tiempo y son difíciles de mantener al día, por eso no siempre son indispensables.</p>
-          <p>Además, el esquema de identificación debe aceptar que los objetos evolucionan. Antes de convertirse en <strong>línea de referencia</strong> un objeto puede cambiar muchas veces, y después de serlo los cambios siguen ocurriendo, aunque con más control.</p>
+          <!-- Proceso -->
+          <div class="sub" id="proceso">
+            <h3>El proceso ACS y sus preguntas</h3>
+            <p>Un buen proceso ACS no tiene que ser burocrático ni pesado, pero sí debe permitir al equipo responder preguntas complejas:</p>
+            <ul class="qlist">
+              <li>¿Cómo se identifican los elementos de la configuración?</li>
+              <li>¿Cómo se manejan las muchas versiones de un programa y su documentación?</li>
+              <li>¿Cómo se controlan los cambios antes y después de entregar el software al cliente?</li>
+              <li>¿Quién aprueba y clasifica los cambios solicitados?</li>
+              <li>¿Cómo se garantiza que los cambios se hicieron bien?</li>
+              <li>¿Cómo se entera el resto del equipo de lo que cambió?</li>
+            </ul>
+            <p>De esas preguntas salen cinco tareas: <strong>identificación, control de versión, control de cambio, auditoría de la configuración y reporte</strong>. Pressman las dibuja como capas concéntricas: los ICS nacen en el centro y avanzan hacia afuera durante su vida útil, hasta formar parte de una versión del software.</p>
+
+            <figure class="figure" data-reveal>
+              <svg class="layers" viewBox="0 0 640 360" role="img" aria-label="Capas del proceso ACS: identificación, control de cambio, control de versión, auditoría de la configuración y reporte, alrededor de los ICS">
+                <ellipse class="ring odd" cx="320" cy="190" rx="300" ry="170"/>
+                <ellipse class="ring" cx="320" cy="190" rx="245" ry="140"/>
+                <ellipse class="ring odd" cx="320" cy="190" rx="190" ry="110"/>
+                <ellipse class="ring" cx="320" cy="190" rx="135" ry="80"/>
+                <ellipse class="ring odd" cx="320" cy="190" rx="80" ry="50"/>
+                <ellipse class="ring" cx="320" cy="198" rx="42" ry="22"/>
+                <text class="lbl" x="320" y="39">Reporte</text>
+                <text class="lbl" x="320" y="69">Auditoría de la configuración</text>
+                <text class="lbl" x="320" y="99">Control de versión</text>
+                <text class="lbl" x="320" y="129">Control de cambio</text>
+                <text class="lbl" x="320" y="159">Identificación</text>
+                <text class="lbl" x="320" y="203">ICS</text>
+              </svg>
+              <figcaption>Capas del proceso ACS (basado en la figura 22.4 del libro).</figcaption>
+            </figure>
+
+            <p>No todos los ítems pasan por todas las capas. Un ICS nuevo siempre debe identificarse, pero si nadie pide cambiarlo, la capa de control de cambio no se aplica. Se le asigna a una versión del software, y su registro (nombre, fecha de creación, versión, etc.) se conserva para auditorías y se reporta a quien necesite saberlo.</p>
+          </div>
+
+          <!-- Identificación -->
+          <div class="sub" id="identificacion">
+            <h3>Identificación de objetos de configuración</h3>
+            <p>Para controlar un ICS, primero hay que darle un nombre propio y organizarlo con un enfoque orientado a objetos. Existen dos tipos:</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Tipo</th><th>Qué es</th><th>Ejemplos</th></tr></thead>
+                <tbody>
+                  <tr><td>Objeto básico</td><td>Unidad de información creada durante el análisis, el diseño, la codificación o las pruebas.</td><td>Una sección de requerimientos, el código fuente de un componente, un conjunto de casos de prueba.</td></tr>
+                  <tr><td>Objeto agregado</td><td>Colección de objetos básicos y de otros objetos agregados.</td><td>Una especificación de diseño que reúne el modelo de arquitectura, el modelo de datos y varios componentes.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Cada objeto se distingue por cuatro características:</p>
+            <div class="grid c4">
+              <div class="card"><h4>Nombre</h4><p>Cadena de texto que lo identifica sin ambigüedad.</p></div>
+              <div class="card"><h4>Descripción</h4><p>Tipo de ICS, proyecto al que pertenece e información de cambio o versión.</p></div>
+              <div class="card"><h4>Recursos</h4><p>Lo que el objeto proporciona, procesa o necesita: tipos de datos, funciones, variables.</p></div>
+              <div class="card"><h4>Realización</h4><p>Puntero al contenido real en un objeto básico; nula en un agregado.</p></div>
+            </div>
+            <p>La identificación también registra cómo se conectan los objetos. Una relación <code>&lt;parte de&gt;</code> forma una jerarquía de ICS, y una relación <code>&lt;interrelacionado&gt;</code> une objetos de ramas distintas de esa jerarquía. Estas relaciones sirven para valorar el impacto de un cambio, pero cuestan tiempo y son difíciles de mantener al día, por eso no son esenciales para la administración global del cambio.</p>
+            <p>Además, el esquema debe aceptar que los objetos evolucionan: antes de ser <strong>línea de referencia</strong> pueden cambiar muchas veces, y después de serlo los cambios siguen ocurriendo.</p>
+          </div>
+
+          <!-- Control de versión -->
+          <div class="sub" id="version">
+            <h3>Control de versión</h3>
+            <p>El control de versión combina procedimientos y herramientas para manejar las distintas versiones de los objetos de configuración que se crean durante el proceso de software. Un sistema de control de versión ofrece estas capacidades:</p>
+            <div class="grid c2">
+              <div class="card"><h4>Base de datos del proyecto</h4><p>El repositorio que almacena todos los objetos de configuración relevantes.</p></div>
+              <div class="card"><h4>Administración de versiones</h4><p>Guarda todas las versiones de un objeto, o permite reconstruir cualquiera usando las diferencias entre versiones pasadas.</p></div>
+              <div class="card"><h4>Facilidad de elaboración</h4><p>Reúne todos los objetos relevantes y construye una versión específica del software.</p></div>
+              <div class="card"><h4>Rastreador de conflictos</h4><p>Permite registrar y seguir el estado de los problemas pendientes de cada objeto (también llamado rastreador de errores). Suele venir junto con el control de versión y de cambio.</p></div>
+            </div>
+            <p>Algunos sistemas definen un <strong>conjunto de cambio</strong>: todos los cambios, respecto a una configuración de referencia, que hacen falta para crear una versión concreta. Dart lo describe como un registro de los cambios en todos los archivos, con su razón, quién los hizo y cuándo. Así se puede construir una versión indicando por nombre qué conjuntos de cambio aplicar.</p>
+            <p>Para lograrlo se usa el <strong>modelado del sistema</strong>, cuyo modelo contiene una plantilla (jerarquía de componentes y orden de construcción), reglas de construcción y reglas de verificación. Ese modelo también sirve para valorar cómo un cambio en un componente impacta a los demás.</p>
+
+            <div class="callout">
+              <div class="callout-title">Herramienta: SVC (CVS)</div>
+              <p>El Sistema de Versiones Concurrentes es muy usado, nació para código fuente pero sirve para cualquier archivo de texto. <strong>1)</strong> Crea un repositorio simple. <strong>2)</strong> Guarda todas las versiones de un archivo en uno solo, almacenando solo las diferencias. <strong>3)</strong> Protege contra cambios simultáneos dando a cada desarrollador su propio directorio, y mezcla los cambios cuando terminan. No es un sistema de construcción (hay que integrarlo con herramientas como Makefile) ni implanta un proceso de control de cambio. Es gratuito, de código abierto, cliente-servidor y funciona en Windows, Mac OS, Linux y Unix.</p>
+            </div>
+          </div>
+
+          <!-- Control de cambio -->
+          <div class="sub" id="cambio">
+            <h3>Control de cambio</h3>
+            <p>James Bach resume la realidad del cambio: es vital controlarlo, pero las mismas fuerzas que lo hacen necesario lo hacen desconcertante. Un pequeño cambio en el código puede causar una gran falla, o arreglar una grande; un solo desarrollador descontrolado puede hundir un proyecto, aunque de esas mismas mentes salgan ideas brillantes, y un control agobiante podría desanimarlos a crear. Es un acto de equilibrio: demasiado control crea problemas, y muy poco también. En un proyecto grande, el cambio descontrolado lleva rápido al caos.</p>
+            <p>Por eso el control de cambio combina procedimientos humanos y herramientas automatizadas. El proceso (figura 22.5 del libro) se resume en tres etapas:</p>
+
+            <div class="grid c3">
+              <div class="card static"><h4>Solicitud y decisión</h4>
+                <ol class="steps">
+                  <li>Se reconoce la necesidad del cambio.</li>
+                  <li>El usuario envía la petición de cambio.</li>
+                  <li>El desarrollador la evalúa.</li>
+                  <li>Se genera el reporte de cambio.</li>
+                  <li>La autoridad de control de cambio (ACC) decide: si lo niega, se informa al usuario; si lo aprueba, se pone en fila y se genera la OCI.</li>
+                </ol>
+              </div>
+              <div class="card static"><h4>Realización</h4>
+                <ol class="steps">
+                  <li>Se asignan personas a los objetos de configuración.</li>
+                  <li>Se hace la “salida” (check out) de los ítems.</li>
+                  <li>Se hace el cambio.</li>
+                  <li>Se revisa (audita) el cambio.</li>
+                  <li>Se hace la “entrada” (check in) de los ítems modificados.</li>
+                  <li>Se establece una línea de referencia para prueba.</li>
+                </ol>
+              </div>
+              <div class="card static"><h4>Integración y entrega</h4>
+                <ol class="steps">
+                  <li>Se realizan actividades de calidad y pruebas.</li>
+                  <li>Se “promueven” los cambios para la siguiente liberación.</li>
+                  <li>Se reconstruye la versión adecuada.</li>
+                  <li>Se audita el cambio en todos los ítems.</li>
+                  <li>Se incluyen los cambios en la nueva versión.</li>
+                  <li>Se distribuye la nueva versión.</li>
+                </ol>
+              </div>
+            </div>
+
+            <p>La petición de cambio se evalúa según su mérito técnico, sus posibles efectos colaterales, su impacto global sobre otros objetos y funciones del sistema, y su costo. El resultado se presenta como un <strong>reporte de cambio</strong>, y la ACC (una persona o un grupo) toma la decisión final sobre su estatus y prioridad. Por cada cambio aprobado se genera una <strong>orden de cambio de ingeniería (OCI)</strong>, que describe el cambio, las restricciones y los criterios de revisión y auditoría. Varias peticiones pueden juntarse en una sola OCI, y una OCI suele afectar varios objetos de configuración.</p>
+            <p>Durante el cambio, el objeto puede ponerse en un directorio controlado solo por quienes lo modifican, o “sacarse” del repositorio, cambiarse y aplicarse las actividades de aseguramiento de calidad; luego “entra” de nuevo y el control de versión crea la siguiente versión. Este mecanismo implementa dos elementos clave de la gestión del cambio:</p>
+            <div class="grid c2">
+              <div class="card"><h4>Control de acceso</h4><p>Determina qué ingenieros pueden acceder y modificar un objeto de configuración.</p></div>
+              <div class="card"><h4>Control de sincronización</h4><p>Evita que cambios paralelos hechos por dos personas se sobrescriban entre sí.</p></div>
+            </div>
+
+            <h4 style="font-size:1.1rem;margin:1.8rem 0 .4rem">Tres niveles de control</h4>
+            <p>Pressman reconoce que este proceso puede parecer burocrático, y que sin salvaguardas retrasa el avance. Por eso el rigor aumenta según la madurez del ICS:</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Nivel</th><th>Cuándo se aplica</th><th>Quién aprueba</th></tr></thead>
+                <tbody>
+                  <tr><td>Informal</td><td>Antes de que el ICS sea línea de referencia.</td><td>El propio desarrollador, si el cambio está justificado y no afecta requerimientos más amplios del sistema.</td></tr>
+                  <tr><td>A nivel de proyecto</td><td>Cuando el ICS ya es línea de referencia (después de revisión técnica y aprobación).</td><td>El gerente del proyecto si el cambio es local; la ACC si afecta a otros ICS.</td></tr>
+                  <tr><td>Formal</td><td>Cuando el software se libera a los clientes.</td><td>Se sigue el procedimiento completo de la figura 22.5.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">Una línea de referencia también puede crearse por otras razones. Por ejemplo, en las “construcciones diarias”, todos los componentes verificados en un momento se vuelven la referencia para el trabajo del día siguiente.</p>
+            <p>La ACC tiene un papel activo en las capas de control de versión y de cambio. Según el tamaño del proyecto puede ser una sola persona (el gerente) o un grupo con representantes de software, hardware, bases de datos, soporte y mercadotecnia. Su función es tener una visión global: ¿cómo afecta el cambio al hardware, al desempeño, a la percepción del cliente, a la calidad y a la confiabilidad?</p>
+
+            <div class="callout">
+              <div class="callout-title">Caso CasaSegura</div>
+              <p>Al comenzar el proyecto, el gerente Doug Miller reúne a su equipo porque mercadotecnia ya pidió “segundas opiniones”. Recuerdan que en un proyecto anterior los cambios incontrolados causaron muchas demoras. Doug propone tres cosas: <strong>1)</strong> desarrollar o adoptar un proceso de control de cambio (cómo se solicitan, evalúan y registran los cambios), <strong>2)</strong> conseguir una buena herramienta ACS para control de cambios y versiones, y <strong>3)</strong> que todos se comprometan a seguir el proceso y a usar las herramientas.</p>
+            </div>
+          </div>
+
+          <!-- Auditoría -->
+          <div class="sub" id="auditoria">
+            <h3>Auditoría de configuración</h3>
+            <p>La identificación, el control de versión y el control de cambio mantienen el orden, pero incluso los mejores mecanismos solo rastrean un cambio hasta que se genera la OCI. Para asegurar que se implementó bien hacen falta dos cosas: revisiones técnicas y auditoría de la configuración.</p>
+            <p>La <strong>revisión técnica</strong> se enfoca en la exactitud técnica del objeto modificado: su consistencia con otros ICS, omisiones y posibles efectos colaterales. Debe hacerse para todos los cambios, salvo los más triviales. La <strong>auditoría</strong> la complementa evaluando lo que normalmente no se ve en la revisión, y responde seis preguntas:</p>
+            <ul class="qlist">
+              <li>¿Se hizo el cambio especificado en la OCI? ¿Se agregó alguna modificación extra?</li>
+              <li>¿Se hizo una revisión técnica para valorar su exactitud?</li>
+              <li>¿Se siguió el proceso y se aplicaron los estándares de ingeniería de software?</li>
+              <li>¿Se destacó el cambio en el ICS, con fecha y autor, y los atributos del objeto lo reflejan?</li>
+              <li>¿Se siguieron los procedimientos ACS para anotar, registrar y reportar el cambio?</li>
+              <li>¿Se actualizaron correctamente los ICS relacionados?</li>
+            </ul>
+            <p>A veces estas preguntas se plantean dentro de la revisión técnica. Pero cuando la ACS es una actividad formal, la auditoría la realiza por separado el grupo de aseguramiento de calidad, que además comprueba que los ICS correctos (por versión) entren en cada construcción y que la documentación esté actualizada y sea consistente con la versión construida.</p>
+          </div>
+
+          <!-- Reporte -->
+          <div class="sub" id="reporte">
+            <h3>Reporte de estado</h3>
+            <p>El reporte del estado de la configuración (a veces llamado contabilidad de estado) responde cuatro preguntas: <strong>¿qué ocurrió? ¿quién lo hizo? ¿cuándo? ¿qué más se verá afectado?</strong></p>
+            <p>Se hace una entrada de reporte cada vez que a un ICS se le asigna una nueva identificación o se actualiza, cada vez que la ACC aprueba un cambio (emite una OCI) y cada vez que se realiza una auditoría, cuyos resultados también se reportan. La salida puede publicarse en una base de datos en línea o en un sitio web, donde desarrolladores y personal de apoyo la consultan por palabras clave. Además se genera un reporte periódico para mantener al tanto de los cambios importantes a gerentes y profesionales.</p>
+            <p class="note">Consejo del libro: mantener una lista de “se necesita saber” para cada objeto de configuración, y avisar a todos los de la lista cada vez que haya un cambio.</p>
+          </div>
+
+          <!-- Herramientas -->
+          <div class="sub" id="herramientas">
+            <h3>Herramientas de apoyo a ACS</h3>
+            <p>Las herramientas ACS apoyan una o más actividades del proceso. La mayoría de las modernas trabajan junto con un repositorio (un sistema de base de datos) y ofrecen mecanismos para identificación, control de versión y de cambio, auditoría y reportes. El libro menciona estas como muestra, sin respaldarlas:</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Herramienta</th><th>Distribuidor</th><th>Característica</th></tr></thead>
+                <tbody>
+                  <tr><td>CCC/Harvest</td><td>Computer Associates</td><td>Sistema ACS multiplataforma.</td></tr>
+                  <tr><td>ClearCase</td><td>Rational</td><td>Familia de funciones ACS.</td></tr>
+                  <tr><td>ChangeMan ZMF</td><td>Serena</td><td>Juego completo de herramientas, para software convencional y webapps.</td></tr>
+                  <tr><td>SourceForge</td><td>VA Software</td><td>Versiones, construcción, rastreo de errores y administración.</td></tr>
+                  <tr><td>SurroundSCM</td><td>Seapine Software</td><td>Capacidades completas de administración del cambio.</td></tr>
+                  <tr><td>Vesta</td><td>Compaq</td><td>De dominio público; sirve desde proyectos pequeños (menos de 10 KLOC) hasta muy grandes (10 000 KLOC).</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Webapps -->
+          <div class="sub" id="webapps">
+            <h3>ACS para webapps</h3>
+            <p>Las webapps se diferencian del software tradicional por la naturaleza siempre presente del cambio. Sus desarrolladores suelen usar un modelo iterativo e incremental con principios del desarrollo ágil: el equipo entrega un incremento en muy poco tiempo, guiado por el cliente, y los incrementos posteriores agregan contenido y funcionalidad. Por eso la pregunta que plantea el libro es qué impacto tiene el cambio descontrolado sobre una webapp. El fragmento revisado termina aquí, al inicio de esta sección.</p>
+          </div>
         </section>
 
+        <!-- ============ EJEMPLOS ============ -->
         <section id="ejemplos">
           <h2>Ejemplos</h2>
 
           <h3>Ejemplo del libro: una especificación de diseño</h3>
-          <p>Una <code>DesignSpecification</code> es un objeto agregado: funciona como una lista nombrada de punteros hacia otros objetos.</p>
-          <pre><code>DesignSpecification        (objeto agregado)
-          ├── ArchitecturalModel     (objeto agregado)
-          ├── DataModel              (objeto agregado)
-          ├── ComponentN             (objeto básico)
-          └── UMLClassDiagramN       (objeto básico)</code></pre>
-          <p>Con la notación de relaciones se expresa así:</p>
-          <pre><code>Diagrama clase        &lt;parte de&gt;         Modelo requerimientos
-          Modelo requerimientos &lt;parte de&gt;         Especificación requerimientos
-          ModeloDatos           &lt;interrelacionado&gt; CasoPruebaClaseM</code></pre>
+          <p>Una <code>DesignSpecification</code> es un objeto agregado: una lista nombrada de punteros hacia otros objetos.</p>
+<pre><code>DesignSpecification        (objeto agregado)
+├── ArchitecturalModel     (objeto agregado)
+├── DataModel              (objeto agregado)
+├── ComponentN             (objeto básico)
+└── UMLClassDiagramN       (objeto básico)</code></pre>
+          <p>Así se expresan las relaciones con la notación de Pressman:</p>
+<pre><code>Diagrama clase        &lt;parte de&gt;          Modelo requerimientos
+Modelo requerimientos &lt;parte de&gt;          Especificación requerimientos
+ModeloDatos           &lt;interrelacionado&gt;  CasoPruebaClaseM</code></pre>
 
           <h3>Ejemplo en este mismo proyecto</h3>
-          <p>Nuestra página web también tiene ICS. Cada archivo es un objeto básico con nombre propio, y el sitio completo es el objeto agregado que los reúne.</p>
-          <pre><code>Sitio Línea Base           (objeto agregado)
-          ├── index.html             (objeto básico)
-          ├── html/ramon.html        (objeto básico)
-          ├── assets/css/styles.css  (objeto básico)
-          └── scripts/script.js      (objeto básico)</code></pre>
-          <p>Si cambia <code>styles.css</code>, la relación de dependencia nos dice que <code>index.html</code> y las páginas de resumen podrían verse afectadas, y por eso conviene revisarlas. Git y GitHub hacen de repositorio: guardan cada objeto, quién lo modificó y cuándo.</p>
+          <p>Esta página también tiene ICS: cada archivo es un objeto básico y el sitio completo es el objeto agregado.</p>
+<pre><code>Sitio Línea Base           (objeto agregado)
+├── index.html             (objeto básico)
+├── html/ramon.html        (objeto básico)
+├── assets/css/styles.css  (objeto básico)
+└── scripts/script.js      (objeto básico)</code></pre>
+          <p>Si cambia <code>styles.css</code>, la relación de dependencia indica que <code>index.html</code> y las páginas de resumen podrían verse afectadas, y conviene revisarlas.</p>
+
+          <h3>Las tareas ACS aplicadas con Git y GitHub</h3>
+          <p>El trabajo en equipo de este proyecto pone en práctica cada tarea del proceso:</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Tarea ACS</th><th>Equivalente en Git y GitHub</th></tr></thead>
+              <tbody>
+                <tr><td>Repositorio</td><td>El repositorio de GitHub, que guarda todos los archivos y su historial.</td></tr>
+                <tr><td>Identificación</td><td>Nombres de archivos y carpetas, y el identificador único de cada commit.</td></tr>
+                <tr><td>Control de versión</td><td>Commits y ramas (branches): cada integrante trabaja aislado en su rama.</td></tr>
+                <tr><td>Control de cambio</td><td>Los Pull Requests: se propone el cambio, se revisa y se aprueba antes de integrarlo a <code>main</code>.</td></tr>
+                <tr><td>Auditoría</td><td>La revisión del Pull Request y la comprobación de que el cambio hace lo que dice.</td></tr>
+                <tr><td>Reporte de estado</td><td>El historial de commits (<code>git log</code>), que dice qué cambió, quién y cuándo.</td></tr>
+              </tbody>
+            </table>
+          </div>
         </section>
 
+        <!-- ============ CONCLUSIÓN ============ -->
         <section id="conclusion">
           <h2>Conclusión</h2>
-          <p>La ACS convierte el cambio, que en un proyecto es inevitable, en algo ordenado y rastreable. Todo empieza por la identificación: lo que no tiene nombre ni descripción no se puede controlar. El repositorio mantiene los ICS y sus relaciones, y el proceso de cinco capas guía cada ítem desde que se crea hasta que forma parte de una versión del software.</p>
-          <p>Entender estos fundamentos permite ver por qué herramientas como Git no son un lujo: ponen en práctica la identificación, el versionado y el registro de cambios que Pressman describe.</p>
-          <p><em>Referencia: Pressman, R. S. Ingeniería del software: un enfoque práctico, cap. 22, pp. 508-510. McGraw-Hill.</em></p>
+          <div class="closing">
+            <p>La ACS convierte el cambio, que en un proyecto es inevitable, en algo ordenado y rastreable. Todo empieza por identificar cada ítem; después el control de versión guarda su historia, el control de cambio decide qué se modifica y quién lo aprueba, la auditoría comprueba que se hizo bien y el reporte mantiene informado a todo el equipo.</p>
+            <p>El mensaje central del capítulo es el equilibrio: sin control el proyecto cae en el caos, y con demasiada burocracia se frena el trabajo. Herramientas como Git y GitHub ponen en práctica estas ideas y permiten aplicarlas sin hacer el proceso pesado.</p>
+            <p class="ref">Pressman, R. S. Ingeniería del software: un enfoque práctico, cap. 22, pp. 508-515. McGraw-Hill.</p>
+          </div>
         </section>
 
       </article>

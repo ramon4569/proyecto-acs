@@ -31,7 +31,7 @@
   <main>
     <div class="page-head">
       <h1>Ramón E.</h1>
-      <p>Resumen de la parte asignada · Administración de la Configuración del Software (Pressman, cap. 22).</p>
+      <p>Repositorio, proceso ACS e identificación de objetos de configuración · Administración de la Configuración del Software (Pressman, cap. 22).</p>
     </div>
 
     <div class="page-layout">
@@ -43,22 +43,100 @@
       </nav>
 
       <article class="article">
+
         <section id="introduccion">
           <h2>Introducción</h2>
-          <div class="placeholder">Contenido pendiente.</div>
+          <p>En un proyecto de software participan varias personas que modifican muchos archivos al mismo tiempo: código, diagramas, documentos y pruebas. Sin un método para ordenar ese trabajo, es fácil que dos personas editen lo mismo, que se pierda una versión o que nadie sepa por qué se hizo un cambio. La Administración de la Configuración del Software (ACS) es la disciplina que evita ese desorden.</p>
+          <p>Pressman explica que el proceso ACS persigue cuatro objetivos: identificar todos los ítems que forman la configuración del software, controlar los cambios que se les hacen, facilitar la construcción de distintas versiones de una aplicación y asegurar que la calidad no se pierda mientras el software evoluciona.</p>
+          <p>A cada uno de esos ítems se le llama <strong>ICS</strong> (ítem de configuración del software): cualquier producto de trabajo que se deba controlar, como un módulo de código, una sección de los requerimientos o un conjunto de casos de prueba.</p>
         </section>
+
         <section id="desarrollo">
           <h2>Desarrollo</h2>
-          <div class="placeholder">Contenido pendiente. Usa &lt;h3&gt; para subtítulos y &lt;p&gt; para párrafos.</div>
+
+          <h3>El repositorio del proyecto</h3>
+          <p>El repositorio es la base de datos donde viven todos los ICS. No solo guarda archivos: también recuerda cómo se relacionan entre sí y qué les ha pasado. Pressman destaca estas funciones:</p>
+          <ul>
+            <li><strong>Variedad de objetos:</strong> almacena texto, gráficos, código, datos de prueba y resultados. Un repositorio maduro puede seguir la pista a una pieza muy pequeña (una definición de datos) o a un grupo completo de módulos.</li>
+            <li><strong>Rastreo de dependencias:</strong> sabe qué elementos dependen de cuáles. Si se modifica un diagrama de clases, avisa que las clases, interfaces y componentes relacionados quizá también deban cambiar.</li>
+            <li><strong>Rastreo de requerimientos:</strong> permite ir hacia adelante (de un requerimiento a todo lo que se construyó a partir de él) y hacia atrás (de un producto de trabajo al requerimiento que lo originó).</li>
+            <li><strong>Administración de configuraciones:</strong> conserva las configuraciones que representan hitos del proyecto o entregas a producción.</li>
+            <li><strong>Ensayos de auditoría:</strong> registra cuándo, por qué y quién hizo cada cambio.</li>
+          </ul>
+
+          <h3>Las preguntas que debe responder el proceso ACS</h3>
+          <p>Un buen proceso ACS no tiene que ser burocrático, pero sí debe permitir al equipo responder preguntas como estas:</p>
+          <ul>
+            <li>¿Cómo se identifican los elementos que componen la configuración?</li>
+            <li>¿Cómo se manejan las muchas versiones de un programa y su documentación?</li>
+            <li>¿Cómo se controlan los cambios antes y después de entregar el software al cliente?</li>
+            <li>¿Quién aprueba y clasifica los cambios solicitados?</li>
+            <li>¿Cómo se comprueba que el cambio se hizo bien?</li>
+            <li>¿Cómo se informa a los demás de lo que cambió?</li>
+          </ul>
+
+          <h3>Las cinco tareas: un modelo de capas</h3>
+          <p>De esas preguntas salen cinco tareas: <strong>identificación, control de versión, control de cambio, auditoría de la configuración y reporte</strong>. Pressman las dibuja como capas concéntricas. Los ICS nacen en el centro y avanzan hacia afuera durante su vida útil, hasta formar parte de una versión del software.</p>
+          <p>No todos los ítems pasan por todas las capas. Un ICS recién creado siempre debe identificarse, pero si nadie pide cambiarlo, la capa de control de cambio simplemente no se aplica. Los compañeros desarrollan en sus apartados las capas de versión, cambio, auditoría y reporte; aquí me concentro en la primera.</p>
+
+          <h3>Identificación de objetos de configuración</h3>
+          <p>Para poder controlar un ICS, primero hay que darle un nombre propio y organizarlo con un enfoque orientado a objetos. Existen dos tipos:</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Tipo</th><th>Qué es</th><th>Ejemplos</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Objeto básico</td><td>Unidad de información creada durante el análisis, el diseño, la codificación o las pruebas.</td><td>Una sección de requerimientos, el código fuente de un componente, un conjunto de casos de prueba.</td></tr>
+                <tr><td>Objeto agregado</td><td>Colección de objetos básicos y de otros objetos agregados.</td><td>Una especificación de diseño que reúne el modelo de arquitectura, el modelo de datos y varios componentes.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Cada objeto se distingue por cuatro características:</p>
+          <ul>
+            <li><strong>Nombre:</strong> una cadena de texto que lo identifica sin ambigüedad.</li>
+            <li><strong>Descripción:</strong> el tipo de ICS que es (modelo, programa, datos), el proyecto al que pertenece y su información de cambio o versión.</li>
+            <li><strong>Recursos:</strong> las entidades que el objeto proporciona, procesa o necesita, como tipos de datos, funciones o nombres de variables.</li>
+            <li><strong>Realización:</strong> un puntero al contenido real en el caso de un objeto básico; en un objeto agregado es nula.</li>
+          </ul>
+
+          <h3>Relaciones entre objetos</h3>
+          <p>La identificación también registra cómo se conectan los objetos. Una relación de pertenencia (<code>&lt;parte de&gt;</code>) forma una jerarquía de ICS, mientras que una relación <code>&lt;interrelacionado&gt;</code> une objetos de ramas distintas de esa jerarquía. Estas relaciones sirven para analizar el impacto de un cambio, pero cuestan tiempo y son difíciles de mantener al día, por eso no siempre son indispensables.</p>
+          <p>Además, el esquema de identificación debe aceptar que los objetos evolucionan. Antes de convertirse en <strong>línea de referencia</strong> un objeto puede cambiar muchas veces, y después de serlo los cambios siguen ocurriendo, aunque con más control.</p>
         </section>
+
         <section id="ejemplos">
           <h2>Ejemplos</h2>
-          <div class="placeholder">Contenido pendiente.</div>
+
+          <h3>Ejemplo del libro: una especificación de diseño</h3>
+          <p>Una <code>DesignSpecification</code> es un objeto agregado: funciona como una lista nombrada de punteros hacia otros objetos.</p>
+          <pre><code>DesignSpecification        (objeto agregado)
+          ├── ArchitecturalModel     (objeto agregado)
+          ├── DataModel              (objeto agregado)
+          ├── ComponentN             (objeto básico)
+          └── UMLClassDiagramN       (objeto básico)</code></pre>
+          <p>Con la notación de relaciones se expresa así:</p>
+          <pre><code>Diagrama clase        &lt;parte de&gt;         Modelo requerimientos
+          Modelo requerimientos &lt;parte de&gt;         Especificación requerimientos
+          ModeloDatos           &lt;interrelacionado&gt; CasoPruebaClaseM</code></pre>
+
+          <h3>Ejemplo en este mismo proyecto</h3>
+          <p>Nuestra página web también tiene ICS. Cada archivo es un objeto básico con nombre propio, y el sitio completo es el objeto agregado que los reúne.</p>
+          <pre><code>Sitio Línea Base           (objeto agregado)
+          ├── index.html             (objeto básico)
+          ├── html/ramon.html        (objeto básico)
+          ├── assets/css/styles.css  (objeto básico)
+          └── scripts/script.js      (objeto básico)</code></pre>
+          <p>Si cambia <code>styles.css</code>, la relación de dependencia nos dice que <code>index.html</code> y las páginas de resumen podrían verse afectadas, y por eso conviene revisarlas. Git y GitHub hacen de repositorio: guardan cada objeto, quién lo modificó y cuándo.</p>
         </section>
+
         <section id="conclusion">
           <h2>Conclusión</h2>
-          <div class="placeholder">Contenido pendiente.</div>
+          <p>La ACS convierte el cambio, que en un proyecto es inevitable, en algo ordenado y rastreable. Todo empieza por la identificación: lo que no tiene nombre ni descripción no se puede controlar. El repositorio mantiene los ICS y sus relaciones, y el proceso de cinco capas guía cada ítem desde que se crea hasta que forma parte de una versión del software.</p>
+          <p>Entender estos fundamentos permite ver por qué herramientas como Git no son un lujo: ponen en práctica la identificación, el versionado y el registro de cambios que Pressman describe.</p>
+          <p><em>Referencia: Pressman, R. S. Ingeniería del software: un enfoque práctico, cap. 22, pp. 508-510. McGraw-Hill.</em></p>
         </section>
+
       </article>
     </div>
   </main>
